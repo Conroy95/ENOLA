@@ -1,0 +1,176 @@
+:root {
+  --bg-sand: #F4EFE6;
+  --panel-sand: #E6DEC8;
+  --border-dark: #1E1D1A;
+  --text-dark: #1E1D1A;
+  --accent-orange: #FF5500;
+  --status-ok: #2E7D32;
+  --status-warn: #D32F2F;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-sand);
+  color: var(--text-dark);
+  font-family: 'Courier New', Courier, monospace;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Header & Statusbalk */
+.cmd-header {
+  background-color: var(--panel-sand);
+  border-bottom: 3px solid var(--border-dark);
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand h1 {
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  font-weight: 900;
+}
+
+.brand span {
+  display: block;
+  font-size: 0.75rem;
+  color: #555248;
+}
+
+.telemetry {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border: 2px solid var(--border-dark);
+  background-color: var(--bg-sand);
+}
+
+.status-online {
+  border-color: var(--status-ok);
+  color: var(--status-ok);
+}
+
+.status-offline {
+  background-color: var(--accent-orange);
+  color: var(--text-dark);
+}
+
+/* Navigatiebalk */
+.cmd-nav {
+  display: flex;
+  background-color: var(--border-dark);
+  gap: 2px;
+}
+
+.nav-btn {
+  flex: 1;
+  background-color: var(--panel-sand);
+  color: var(--text-dark);
+  border: none;
+  padding: 12px 8px;
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.15s;
+}
+
+.nav-btn:hover {
+  background-color: #DCD2B6;
+}
+
+.nav-btn.active {
+  background-color: var(--accent-orange);
+  color: var(--text-dark);
+  box-shadow: inset 0 -4px 0 var(--border-dark);
+}
+
+/* Hoofdscherm & Secties */
+.cmd-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  position: relative;
+}
+
+.view-section {
+  display: none;
+  height: 100%;
+}
+
+.view-section.active {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Tactische Panelen */
+.tac-panel {
+  background-color: var(--panel-sand);
+  border: 2px solid var(--border-dark);
+  padding: 14px;
+  box-shadow: 4px 4px 0px var(--border-dark);
+}
+
+.tac-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--border-dark);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.tac-btn {
+  background-color: var(--accent-orange);
+  color: var(--text-dark);
+  border: 2px solid var(--border-dark);
+  padding: 8px 14px;
+  font-family: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 2px 2px 0px var(--border-dark);
+}
+
+.tac-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+/* Footer */
+.cmd-footer {
+  background-color: var(--border-dark);
+  color: var(--bg-sand);
+  font-size: 0.75rem;
+  padding: 6px 16px;
+  display: flex;
+  justify-content: space-between;
+}
