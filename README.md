@@ -47,3 +47,8 @@ Checkliststatus wordt uitsluitend in `localStorage` van de browser bewaard. De G
 
 ## Gebruik
 Project ENOLA is een hulpmiddel voor voorbereiding en algemene informatie. Het is geen meldkamer, officiële overheidsapp, noodcommunicatiesysteem of vervanging van 112. Volg bij incidenten altijd actuele aanwijzingen van de bevoegde autoriteiten.
+
+
+## Kleurenpalet
+
+De interface gebruikt uitsluitend de opgegeven merkkleuren: Sand `#D8C7A5`, Khaki `#B49C76`, Orange `#E87524` en Charcoal `#292923`. Transparante varianten worden alleen gebruikt voor randen en schaduwen.
