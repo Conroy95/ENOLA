@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="#D8C7A5" rx="64" />
+  <polygon points="256,36 446,146 446,366 256,476 66,366 66,146" fill="#E87524" stroke="#292923" stroke-width="14" />
+  <polygon points="256,64 422,160 422,352 256,448 90,352 90,160" fill="none" stroke="#D8C7A5" stroke-width="4" stroke-dasharray="12,8" />
+  <text x="256" y="274" font-family="monospace, sans-serif" font-weight="900" font-size="76" fill="#292923" text-anchor="middle" letter-spacing="6">ENOLA</text>
+  <text x="256" y="315" font-family="monospace, sans-serif" font-weight="bold" font-size="20" fill="#D8C7A5" text-anchor="middle" letter-spacing="4">CMD-NL</text>
+</svg>
