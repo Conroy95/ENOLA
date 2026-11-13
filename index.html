@@ -15,6 +15,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="ENOLA">
 
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -44,18 +46,21 @@
   <!-- Hoofdscherm -->
   <main class="cmd-main">
     
-    <!-- Sectie 1: Kaart (Wordt in Fase 3 gevuld) -->
+    <!-- Sectie 1: Kaart -->
     <section id="view-map" class="view-section active">
-      <div class="tac-panel">
+      <div class="tac-panel" style="flex: 1; display: flex; flex-direction: column; min-height: 400px;">
         <div class="tac-panel-header">
-          <span>SECTOROVERZICHT NEDERLAND</span>
-          <button class="tac-btn" disabled>KAART MODULE (FASE 3)</button>
+          <span>TACTISCHE KAART // SECTOR NEDERLAND</span>
+          <div style="display: flex; gap: 8px;">
+            <button class="tac-btn" id="btn-nl-center">RESET NL</button>
+            <button class="tac-btn" id="btn-print-map">PRINT KAART</button>
+          </div>
         </div>
-        <p>Klaar voor integratie van OpenStreetMap en de tactische printfunctie in Fase 3.</p>
+        <div id="map" style="flex: 1; width: 100%; border: 2px solid #1E1D1A; min-height: 350px;"></div>
       </div>
     </section>
 
-    <!-- Sectie 2: Noodradio (Wordt in Fase 4 gevuld) -->
+    <!-- Sectie 2: Noodradio -->
     <section id="view-radio" class="view-section">
       <div class="tac-panel">
         <div class="tac-panel-header">
@@ -65,7 +70,7 @@
       </div>
     </section>
 
-    <!-- Sectie 3: Belangrijke Informatie (Wordt in Fase 4 gevuld) -->
+    <!-- Sectie 3: Belangrijke Informatie -->
     <section id="view-info" class="view-section">
       <div class="tac-panel">
         <div class="tac-panel-header">
@@ -83,6 +88,6 @@
     <span>LOCATIE: NEDERLAND</span>
   </footer>
 
-  <script src="js/app.js"></script>
-</body>
-</html>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="
