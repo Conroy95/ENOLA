@@ -1,17 +1,48 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="nl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#e8dfca" />
-    <meta
-      name="description"
-      content="ENOLA - jouw persoonlijke informatie- en commandocentrum."
-    />
-    <title>ENOLA | Commandocentrum</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>PROJECT ENOLA // CMD-NL</title>
+  
+  <!-- PWA & Thema kleuren -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#FF5500">
+  <meta name="background-color" content="#F4EFE6">
+
+  <!-- Favicons & Apple iOS ondersteuning -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ENOLA">
+
+  <style>
+    body {
+      background-color: #F4EFE6;
+      color: #1E1D1A;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    .badge {
+      background-color: #FF5500;
+      color: #1E1D1A;
+      padding: 4px 12px;
+      font-weight: bold;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <img src="assets/icons/logo.svg" alt="ENOLA Logo" width="140" height="140">
+  <h1>PROJECT ENOLA</h1>
+  <p>FASE 1: SYSTEEMBASIS GEÏNITIALISEERD</p>
+  <div class="badge">STATUS: STANDBY</div>
+</body>
 </html>
