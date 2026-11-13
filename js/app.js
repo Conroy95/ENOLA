@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
-      .then(() => console.log('[ENOLA] Offline systeem gereed.'))
-      .catch((err) => console.error('[ENOLA] SW fout:', err));
+    navigator.serviceWorker.register('./sw.js').then((reg) => {
+      reg.update();
+    });
   }
 
   const navButtons = document.querySelectorAll('.nav-btn');
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById(targetId).classList.add('active');
 
       if (targetId === 'view-map' && window.enolaMap) {
-        setTimeout(() => { window.enolaMap.invalidateSize(); }, 200);
+        setTimeout(() => { window.enolaMap.invalidateSize(); }, 100);
       }
     });
   });
@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }).addTo(enolaMap);
 
   window.enolaMap = enolaMap;
+  setTimeout(() => { enolaMap.invalidateSize(); }, 250);
 
   document.getElementById('btn-nl-center').addEventListener('click', () => {
     enolaMap.setView(nlCenter, 8);
