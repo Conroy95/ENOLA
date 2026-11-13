@@ -1,0 +1,38 @@
+{
+  "id": "./",
+  "name": "Project ENOLA — Tactisch Commandocentrum",
+  "short_name": "ENOLA",
+  "description": "Offline voorbereidings- en informatiecentrum voor Nederland.",
+  "lang": "nl-NL",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#292923",
+  "theme_color": "#292923",
+  "categories": [
+    "utilities",
+    "education",
+    "navigation"
+  ],
+  "icons": [
+    {
+      "src": "./icons/enola-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/enola-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/enola-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#292923">
+  <meta name="description" content="Project ENOLA — offline voorbereidings- en informatiecentrum voor Nederland.">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ENOLA">
+  <meta name="application-name" content="Project ENOLA">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icons/enola-192.png">
+  <link rel="icon" href="./icons/enola-192.png">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="./styles.css">
+  <title>PROJECT ENOLA // COMMAND</title>
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">E<span>N</span></div>
+      <div><div class="eyebrow">NATIONAAL PARAATHEIDSSYSTEEM</div><h1>PROJECT ENOLA</h1></div>
+    </div>
+    <div class="top-status"><span class="status-dot"></span><span id="connection-status">SYSTEEM START OP</span><span id="clock">--:--:--</span></div>
+  </header>
+
+  <main class="shell">
+    <section class="mission-strip">
+      <div><span class="eyebrow">OPERATIONELE STATUS</span><strong>INFORMATIE &amp; VOORBEREIDING</strong></div>
+      <div class="mission-right"><span class="tag">NL / 001</span><span class="tag tag-orange">OFFLINE-READY</span></div>
+    </section>
+
+    <nav class="tabs" aria-label="Hoofdnavigatie" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true" aria-controls="panel-map" id="tab-map" data-tab="map"><span>01</span> TACTISCHE KAART</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="panel-radio" id="tab-radio" data-tab="radio"><span>02</span> NOODRADIO</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="panel-info" id="tab-info" data-tab="info"><span>03</span> NOODINFO</button>
+    </nav>
+
+    <section class="panel active" id="panel-map" role="tabpanel" aria-labelledby="tab-map">
+      <div class="section-head">
+        <div><div class="eyebrow">MODULE 01 // GEO-INFORMATIE</div><h2>TACTISCHE KAART</h2></div>
+        <div class="live-label"><span class="status-dot"></span> OPENSTREETMAP</div>
+      </div>
+      <div class="map-toolbar">
+        <button class="btn btn-primary" id="locate-btn">◎ MIJN LOCATIE</button>
+        <button class="btn" id="reset-map">⌖ NEDERLAND</button>
+        <button class="btn" id="print-map">▤ PRINTMODUS</button>
+      </div>
+      <div class="map-wrap">
+        <div id="map" aria-label="Interactieve kaart van Nederland"></div>
+        <div class="map-corner map-corner-tl">ENOLA // GEO-01</div>
+        <div class="map-corner map-corner-br" id="map-coords">52.1326° N / 5.2913° E</div>
+      </div>
+      <div class="map-foot">
+        <span><i class="legend-dot"></i> GPS-POSITIE</span>
+        <span id="gps-status">GPS: NIET GEACTIVEERD</span>
+        <span id="tile-status">KAARTTEGELS: ONLINE / CACHE</span>
+      </div>
+      <p class="notice"><strong>OFFLINE:</strong> de kaartbibliotheek wordt bij de eerste online start opgeslagen. Kaarttegels worden bewaard zodra je ze bekijkt. Niet eerder bezochte gebieden zijn offline mogelijk niet beschikbaar. OpenStreetMap-tegels worden niet vooraf massaal gedownload.</p>
+    </section>
+
+    <section class="panel" id="panel-radio" role="tabpanel" aria-labelledby="tab-radio" hidden>
+      <div class="section-head">
+        <div><div class="eyebrow">MODULE 02 // RADIOCOMMUNICATIE</div><h2>NOODRADIO</h2></div>
+        <div class="live-label">FM / VHF / PMR446</div>
+      </div>
+      <div class="notice notice-orange"><strong>LET OP:</strong> er bestaat geen enkele landelijke FM-noodfrequentie. De regionale publieke omroep is de calamiteitenzender. Frequenties verschillen per zendlocatie; controleer ontvangst en stem vooraf af.</div>
+      <div class="radio-tools">
+        <label class="field-label" for="province-filter">SELECTEER PROVINCIE / REGIO</label>
+        <select id="province-filter">
+          <option value="all">ALLE PROVINCIES</option>
+          <option value="Drenthe">Drenthe</option><option value="Flevoland">Flevoland</option>
+          <option value="Friesland">Friesland</option><option value="Gelderland">Gelderland</option>
+          <option value="Groningen">Groningen</option><option value="Limburg">Limburg</option>
+          <option value="Noord-Brabant">Noord-Brabant</option><option value="Noord-Holland">Noord-Holland</option>
+          <option value="Overijssel">Overijssel</option><option value="Utrecht">Utrecht</option>
+          <option value="Zeeland">Zeeland</option><option value="Zuid-Holland">Zuid-Holland</option>
+        </select>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>PROVINCIE</th><th>OMROEP</th><th>ZENDERLOCATIE</th><th>FM MHz</th></tr></thead>
+          <tbody id="fm-table"></tbody>
+        </table>
+      </div>
+      <div class="subsection-head"><span class="eyebrow">MARITIEME COMMUNICATIE // VHF</span></div>
+      <div class="channel-grid">
+        <article class="channel-card urgent"><div class="channel-number">16</div><div><b>VHF KANAAL 16</b><p>156.800 MHz · Internationale maritieme nood-, spoed- en veiligheidsoproepen (spraak). Kustwacht: “Den Helder Rescue”.</p></div></article>
+        <article class="channel-card"><div class="channel-number">70</div><div><b>VHF KANAAL 70 / DSC</b><p>156.525 MHz · Digitale selectieve oproep (DSC), inclusief distress-alert. Geen spraakverkeer op kanaal 70.</p></div></article>
+        <article class="channel-card"><div class="channel-number">10</div><div><b>BINNENWATEREN</b><p>Geen universeel noodkanaal voor alle binnenwateren. Gebruik het lokale blokkanaal of het kanaal waarop je uitluistert; volg de vaarweginstructies.</p></div></article>
+      </div>
+      <div class="subsection-head"><span class="eyebrow">KORTE-AFSTANDSCOMMUNICATIE // PMR446</span></div>
+      <div class="pmr-box">
+        <div><b>PMR446 — 16 ANALOGE KANALEN</b><p>446.00625 t/m 446.19375 MHz · kanaalafstand 12,5 kHz.</p><p class="muted">Vergunningvrij onder voorwaarden, gedeeld met andere gebruikers. Geen officieel nood-, hulpdienst- of gegarandeerd storingsvrij kanaal.</p></div>
+        <div class="pmr-channels" id="pmr-channels"></div>
+      </div>
+      <p class="source-note">FM-bron: Denk vooruit / Rijksoverheid. Frequenties kunnen wijzigen en ontvangst hangt af van locatie, antenne en omstandigheden. Controleer actuele gegevens via <a href="https://www.denkvooruit.nl/bereid-je-voor/zo-krijg-je-een-waarschuwing/radio" target="_blank" rel="noopener">Denk vooruit – Radio</a>.</p>
+    </section>
+
+    <section class="panel" id="panel-info" role="tabpanel" aria-labelledby="tab-info" hidden>
+      <div class="section-head">
+        <div><div class="eyebrow">MODULE 03 // DIRECTE ACTIE</div><h2>NOODINFO</h2></div>
+        <div class="live-label">72 UUR PARAAT</div>
+      </div>
+      <div class="emergency-grid">
+        <a class="emergency-card danger" href="tel:112"><span class="eyebrow">DIRECT LEVENSGEVAAR</span><strong>112</strong><span>POLITIE / BRANDWEER / AMBULANCE</span><small>Tik om te bellen</small></a>
+        <a class="emergency-card" href="https://www.nl-alert.nl/" target="_blank" rel="noopener"><span class="eyebrow">OVERHEIDSWAARSCHUWING</span><strong>NL-ALERT</strong><span>LEES HET BERICHT EN VOLG INSTRUCTIES</span><small>Officiële informatie ↗</small></a>
+        <article class="emergency-card"><span class="eyebrow">NATIONAAL WAARSCHUWINGSSIGNAAL</span><strong>LUCHTALARM</strong><span>GA NAAR BINNEN · SLUIT RAMEN EN DEUREN · ZET VENTILATIE UIT</span><small>Volg daarna officiële berichtgeving</small></article>
+      </div>
+      <div class="action-list">
+        <h3>DIRECTE ACTIEPUNTEN</h3>
+        <ol>
+          <li><b>112 bellen</b> bij direct levensgevaar of wanneer dringend professionele hulp nodig is. Geef locatie, aard van het incident en aantal betrokkenen door.</li>
+          <li><b>NL-Alert lezen</b> en de instructies precies opvolgen. Informeer mensen in je omgeving die het bericht mogelijk niet hebben ontvangen.</li>
+          <li><b>Bij het luchtalarm:</b> ga naar binnen, sluit ramen en deuren en schakel ventilatie uit. Zoek betrouwbare informatie en wacht op het officiële sein veilig.</li>
+          <li><b>Volg de overheid:</b> instructies kunnen per incident verschillen. Soms moet je schuilen, soms evacueren. Volg altijd de actuele aanwijzingen.</li>
+        </ol>
+      </div>
+      <div class="check-head">
+        <div><div class="eyebrow">MODULE 03B // PERSOONLIJKE VOORRAAD</div><h3>72-UURS NOODPAKKET</h3></div>
+        <div class="progress" id="check-progress">0 / 15</div>
+      </div>
+      <div class="water-calc">
+        <label for="people-count">AANTAL PERSONEN</label>
+        <input type="number" min="1" max="30" id="people-count" value="1">
+        <div><span>WATERVOORRAAD (3 L / PERSOON / DAG)</span><strong id="water-total">9 LITER</strong></div>
+      </div>
+      <div class="checklist" id="checklist"></div>
+      <div class="check-actions"><button class="btn" id="reset-checklist">↺ CHECKLIST RESETTEN</button><span class="muted">Voortgang wordt lokaal op dit apparaat bewaard.</span></div>
+      <p class="source-note">Checklist gebaseerd op de adviezen van de Rijksoverheid. Pas het pakket aan op kinderen, huisdieren, medicatie en persoonlijke omstandigheden. Controleer de voorraad minimaal ieder halfjaar.</p>
+    </section>
+
+    <footer class="footer">
+      <span>PROJECT ENOLA <span class="muted">/ CIVIELE PARAATHEID</span></span>
+      <span id="app-version">BUILD 1.0.0</span>
+      <span>INFORMATIE IS GEEN VERVANGING VOOR HULPDIENSTEN</span>
+    </footer>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="./app.js"></script>
+</body>
+</html>
