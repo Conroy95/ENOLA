@@ -1,4 +1,4 @@
-const CACHE_NAME = 'enola-cmd-v3';
+const CACHE_NAME = 'enola-cmd-v4';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -6,6 +6,9 @@ const ASSETS_TO_CACHE = [
   './css/style.css',
   './js/app.js',
   './assets/icons/logo.svg',
+  './assets/icons/icon-192.png',
+  './assets/icons/icon-512.png',
+  './assets/icons/apple-touch-icon.png',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
 ];
