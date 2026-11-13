@@ -12,14 +12,16 @@
   padding: 0;
 }
 
-body {
+html, body {
+  height: 100%;
   background-color: var(--bg-sand);
   color: var(--text-charcoal);
   font-family: 'Courier New', Courier, monospace;
+}
+
+body {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
 }
 
 .cmd-header {
@@ -31,6 +33,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
+  flex-shrink: 0;
 }
 
 .brand {
@@ -53,7 +56,7 @@ body {
 
 .telemetry {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
   font-size: 0.85rem;
   font-weight: bold;
@@ -65,20 +68,15 @@ body {
   background-color: var(--bg-sand);
 }
 
-.status-online {
-  background-color: var(--bg-sand);
-  color: var(--text-charcoal);
-}
-
 .status-offline {
   background-color: var(--accent-orange);
-  color: var(--text-charcoal);
 }
 
 .cmd-nav {
   display: flex;
   background-color: var(--border-charcoal);
   gap: 2px;
+  flex-shrink: 0;
 }
 
 .nav-btn {
@@ -86,13 +84,12 @@ body {
   background-color: var(--panel-khaki);
   color: var(--text-charcoal);
   border: none;
-  padding: 12px 8px;
+  padding: 12px 6px;
   font-family: inherit;
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   cursor: pointer;
   text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 .nav-btn.active {
@@ -102,17 +99,17 @@ body {
 
 .cmd-main {
   flex: 1;
+  padding: 14px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  overflow: hidden;
 }
 
 .view-section {
   display: none;
-  flex: 1;
   flex-direction: column;
-  height: 100%;
+  gap: 16px;
+  flex: 1;
 }
 
 .view-section.active {
@@ -130,13 +127,15 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 450px;
 }
 
 .tac-panel-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
   border-bottom: 2px solid var(--border-charcoal);
   padding-bottom: 8px;
   margin-bottom: 12px;
@@ -146,15 +145,17 @@ body {
 
 .btn-group {
   display: flex;
-  gap: 8px;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .tac-btn {
   background-color: var(--accent-orange);
   color: var(--text-charcoal);
   border: 2px solid var(--border-charcoal);
-  padding: 6px 12px;
+  padding: 6px 10px;
   font-family: inherit;
+  font-size: 0.8rem;
   font-weight: bold;
   cursor: pointer;
   text-transform: uppercase;
@@ -169,11 +170,50 @@ body {
 #map {
   flex: 1;
   width: 100%;
-  height: 100%;
-  min-height: 300px;
+  height: 60vh;
+  min-height: 380px;
   border: 2px solid var(--border-charcoal);
   background-color: var(--bg-sand);
   z-index: 1;
+}
+
+/* Tabellen & Lijsten */
+.tac-note {
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.tac-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-sand);
+  font-size: 0.85rem;
+}
+
+.tac-table th, .tac-table td {
+  border: 2px solid var(--border-charcoal);
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.tac-table th {
+  background-color: var(--border-charcoal);
+  color: var(--bg-sand);
+}
+
+.tac-list {
+  list-style-type: square;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
 .cmd-footer {
@@ -183,6 +223,7 @@ body {
   padding: 6px 16px;
   display: flex;
   justify-content: space-between;
+  flex-shrink: 0;
 }
 
 @media print {
