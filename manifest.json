@@ -1,0 +1,28 @@
+{
+  "name": "Project ENOLA — Commandocentrum",
+  "short_name": "ENOLA",
+  "description": "Offline tactisch commandocentrum en noodinformatie voor Nederland.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F4EFE6",
+  "theme_color": "#FF5500",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "assets/icons/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
