@@ -1,4 +1,4 @@
-const CACHE_NAME = 'enola-cmd-v4';
+const CACHE_NAME = 'enola-cmd-v6';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -16,7 +16,9 @@ const ASSETS_TO_CACHE = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
+      return Promise.allSettled(
+        ASSETS_TO_CACHE.map((url) => cache.add(url))
+      );
     })
   );
   self.skipWaiting();
@@ -36,12 +38,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      return cachedResponse || fetch(event.request).catch(() => {
-        return new Response('OFFLINE - GEEN CACHED DATA BESCHIKBAAR', {
-          status: 503,
-          statusText: 'Offline'
-        });
-      });
+      return cachedResponse || fetch(event.request);
     })
   );
 });
