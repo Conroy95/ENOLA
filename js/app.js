@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // 1. Service Worker Registreren
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').then((reg) => {
       reg.update();
-    });
+    }).catch(err => console.error('SW error:', err));
   }
 
+  // 2. Navigatie
   const navButtons = document.querySelectorAll('.nav-btn');
   const sections = document.querySelectorAll('.view-section');
 
@@ -19,11 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById(targetId).classList.add('active');
 
       if (targetId === 'view-map' && window.enolaMap) {
-        setTimeout(() => { window.enolaMap.invalidateSize(); }, 100);
+        setTimeout(() => { window.enolaMap.invalidateSize(); }, 150);
       }
     });
   });
 
+  // 3. Klok
   const clockEl = document.getElementById('live-clock');
   function updateClock() {
     const now = new Date();
@@ -32,13 +35,14 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(updateClock, 1000);
   updateClock();
 
+  // 4. Online / Offline Status
   const statusEl = document.getElementById('net-status');
   function updateNetworkStatus() {
     if (navigator.onLine) {
-      statusEl.textContent = '● VERBONDEN';
-      statusEl.className = 'status-badge status-online';
+      statusEl.textContent = '● ONLINE';
+      statusEl.className = 'status-badge';
     } else {
-      statusEl.textContent = '▲ OFFLINE MODUS';
+      statusEl.textContent = '▲ OFFLINE';
       statusEl.className = 'status-badge status-offline';
     }
   }
@@ -46,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('offline', updateNetworkStatus);
   updateNetworkStatus();
 
+  // 5. Kaart Initialiseren (Nederland)
   const nlCenter = [52.1326, 5.2913];
   const enolaMap = L.map('map', {
     zoomControl: false
@@ -59,12 +64,43 @@ document.addEventListener('DOMContentLoaded', () => {
   }).addTo(enolaMap);
 
   window.enolaMap = enolaMap;
-  setTimeout(() => { enolaMap.invalidateSize(); }, 250);
+  setTimeout(() => { enolaMap.invalidateSize(); }, 300);
 
+  // Knop: Reset naar Nederland
   document.getElementById('btn-nl-center').addEventListener('click', () => {
     enolaMap.setView(nlCenter, 8);
   });
 
+  // Knop: Mijn GPS Locatie
+  let userMarker = null;
+  document.getElementById('btn-gps').addEventListener('click', () => {
+    if (!navigator.geolocation) {
+      alert('GPS wordt niet ondersteund door dit apparaat.');
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const coords = [pos.coords.latitude, pos.coords.longitude];
+        enolaMap.setView(coords, 14);
+        if (userMarker) {
+          userMarker.setLatLng(coords);
+        } else {
+          userMarker = L.circleMarker(coords, {
+            radius: 10,
+            fillColor: '#E87524',
+            color: '#292923',
+            weight: 3,
+            fillOpacity: 1
+          }).addTo(enolaMap).bindPopup('HUIDIGE POSITIE').openPopup();
+        }
+      },
+      () => {
+        alert('Kan GPS-locatie niet bepalen. Controleer locatietoegang.');
+      }
+    );
+  });
+
+  // Knop: Print Kaart
   document.getElementById('btn-print-map').addEventListener('click', () => {
     window.print();
   });
